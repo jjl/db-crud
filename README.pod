@@ -1,0 +1,134 @@
+=head1 NAME
+
+DB::CRUD - CRUD for your database during dev - in a single script
+
+=head1 WHAT IS IT FOR?
+
+Prototyping. The sooner you get *some* data into your database, the sooner
+you're unblocked to write the code using that data. This module provides
+a convenient web interface to get you back to writing code.
+
+=head1 WHAT IS IT NOT FOR?
+
+Production. There's no security at all, it's using a pure perl webserver etc. etc.
+Ignore this advice at your peril and don't complain to us when you get hurt.
+
+=head1 HOW READY IS IT?
+
+It isn't. I'm just getting something up on github at this stage. It's not
+a complicated thing.
+
+=head1 USAGE
+
+If you weren't reading, it doesn't work yet
+
+Running it will look like this:
+
+    crud [-p PORT]
+
+There will eventually be other scripts as well.
+
+Installation will look like this:
+
+    bin/build.sh
+    mkdir -p ~/bin
+    cp -p packed/* ~/bin/ # preserve execute bit
+    export PATH="$HOME/bin:$PATH"
+
+And adding the export line to your shell's rc file (.bashrc, .zshrc etc.)
+
+If you don't see the 'crud' program, you may need to 'hash -r' to make
+your shell rehash your PATH.
+
+At that point, the user will need to install the relevant DBD module for
+their chosen database (which we highly recommend doing through their
+package manager because it's much more straightforward) if it's not installed.
+DBD::Pg seemed to build fine on OSX recently with a perlbrewed perl, but I
+wouldn't like to rely on it because it makes it hard for people who don't perl
+to get started.
+
+=head1 ROADMAP
+
+- websockets talking to perl
+- database connection and introspection
+- display table introspection in web ui
+- Simple forms for data entry
+- Test data generation
+- Logging of actions to a SQL script / similar for replay (i.e. free fixtures!)
+- Automated operation (data in commandline / environment) - fixture generation
+
+=head1 HACKING
+
+Major caveat here is that since we expect to be deployed as a single script,
+we can't use any non-core XS modules. Actually, it's worse than that. Since we
+want to be used by frameworks to help people generate fixtures, we can't use
+'big' modules like DBIx::Class either, so we have to limit ourselves further.
+
+I haven't actually tried fatpacking it yet, so I don't know if that's going to be feasible.
+
+=head2 What version of Perl do you support?
+
+I haven't decided yet. It's for development, so I think we can assume at least the minimum
+version of whatever perl5 the following distributions ship:
+- Fedora
+- Ubuntu
+- Debian
+
+We see perl6 support as out of scope. It doesn't matter what it's written in, as long as it owrks.
+
+=head2 Why don't you use a CSS/JS preprocessor?
+
+Because build tools suck and they fail and the build breaks and MAKE IT GO AWAY.
+
+We optimise for 'just works', not being able to use shiny.
+
+=head2 How do I run the tests?
+
+    prove -Ilib t/
+
+=head2 How do I contribute?
+
+Preferably via pull request on github. Make sure the tests pass after your change.
+We're more likely to accept your patch if you include tests and documentation
+where relevant.
+
+=head1 SCREENSHOTS
+
+Yep, I'll make some of those when it's worth doing.
+
+=head1 WHAT IS THE WEB INTERFACE LIKE?
+
+(Or what it will be like...)
+
+It's a single page application that uses lots of javascript. Initially
+the interface isn't likely to be terribly pretty because I'm crap at design
+
+=head1 SEE ALSO
+
+L<App::AutoCRUD> - Better for production, less good for development
+L<Catalyst::Plugin::AutoCRUD> - Heavyweight, nicely integrated with Catalyst
+
+=head1 COPYRIGHT & LICENSE
+
+GPL v3 because:
+- It's a tool used during dev, not something you're deploying to live
+- Giving back feels good
+
+This is the first time I've licensed anything under GPL3 and I'm keen
+to see how it works out in practice. I am open to being talked around
+if you've got a fantastic reason you want to share with me.
+
+DB::CRUD  Copyright (c) 2015 James Laver
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
